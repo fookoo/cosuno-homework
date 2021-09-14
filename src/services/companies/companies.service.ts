@@ -1,29 +1,21 @@
 import { CompanyFeatureEnum, ICompanies } from './companies.type'
-import { mockCompanies } from './companies.mock'
 
 export class CompaniesService {
-    public static getCompanies(
-        nameQuery = '',
-        featureQuery: CompanyFeatureEnum[]
-    ): Promise<ICompanies[]> {
-        console.log('FETCH', nameQuery, featureQuery)
-        return new Promise<ICompanies[]>((success) => {
-            setTimeout(() => {
-                success(
-                    mockCompanies
-                        .filter(
-                            ({ name }) =>
-                                nameQuery === '' || name.includes(nameQuery)
-                        )
-                        .filter(
-                            ({ features }) =>
-                                featureQuery.length === 0 ||
-                                featureQuery.some((selectedFeature) =>
-                                    features.includes(selectedFeature)
-                                )
-                        )
-                )
-            }, 500)
-        })
-    }
+  public static getCompanies(
+    nameQuery = '',
+    featureQuery: CompanyFeatureEnum[]
+  ): Promise<ICompanies[]> {
+    return new Promise<ICompanies[]>((success, error) => {
+      const query = `${nameQuery ? `name=${encodeURIComponent(nameQuery)}` : ''}${
+        featureQuery.length ? `&features=${encodeURIComponent(featureQuery.join(','))}` : ''
+      }`
+
+      fetch(`http://localhost:8090/companies${query ? `?${query}` : ''}`, {
+        method: 'GET'
+      })
+        .then((response) => response.json())
+        .then(success)
+        .catch(error)
+    })
+  }
 }

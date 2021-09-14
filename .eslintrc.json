@@ -1,34 +1,46 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
     "extends": [
         "eslint:recommended",
+        "plugin:import/recommended",
         "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:prettier/recommended",
         "plugin:@typescript-eslint/recommended"
     ],
+    "plugins": ["@typescript-eslint", "jsx-a11y", "react", "react-hooks", "prettier"],
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 12,
-        "sourceType": "module"
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
+    "settings": {
+        "react": {
+            "createClass": "createReactClass",
+            "pragma": "React",
+            "fragment": "Fragment",
+            "version": "detect"
+        }
+    },
     "rules": {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-types": "off",
+        "import/prefer-default-export": "off",
+        "import/no-unresolved": "off",
+        "react/display-name": "off",
         "react/prop-types": "off",
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ]
+        "react/require-default-props": "off",
+        "no-bitwise": "off",
+        "@typescript-eslint/no-unused-expressions": "error"
     }
 }
